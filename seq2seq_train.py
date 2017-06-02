@@ -121,7 +121,7 @@ def train():
   """Train a en->fr translation model using WMT data."""
   #with tf.device("/gpu:0"):
   # Prepare WMT data.
-  train_path = os.path.join(FLAGS.data_dir, "train")
+  train_path = os.path.join(FLAGS.data_dir, "chitchat.train")
   '''fixed_path = os.path.join(FLAGS.data_dir, "chitchat.fixed")
   weibo_path = os.path.join(FLAGS.data_dir, "chitchat.weibo")
   qa_path = os.path.join(FLAGS.data_dir, "chitchat.qa")'''
