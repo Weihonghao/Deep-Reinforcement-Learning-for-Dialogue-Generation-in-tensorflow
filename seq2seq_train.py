@@ -122,12 +122,13 @@ def train():
   #with tf.device("/gpu:0"):
   # Prepare WMT data.
   train_path = os.path.join(FLAGS.data_dir, "chitchat.train")
-  fixed_path = os.path.join(FLAGS.data_dir, "chitchat.fixed")
+  '''fixed_path = os.path.join(FLAGS.data_dir, "chitchat.fixed")
   weibo_path = os.path.join(FLAGS.data_dir, "chitchat.weibo")
-  qa_path = os.path.join(FLAGS.data_dir, "chitchat.qa")
+  qa_path = os.path.join(FLAGS.data_dir, "chitchat.qa")'''
 
-  voc_file_path = [train_path+".answer", fixed_path+".answer", weibo_path+".answer", qa_path+".answer",
-                     train_path+".query", fixed_path+".query", weibo_path+".query", qa_path+".query"]
+  #voc_file_path = [train_path+".answer", fixed_path+".answer", weibo_path+".answer", qa_path+".answer",
+                     #train_path+".query", fixed_path+".query", weibo_path+".query", qa_path+".query"]
+  voc_file_path = [train_path+".answer", train_path+".query"]
 
   vocab_path = os.path.join(FLAGS.data_dir, "vocab%d.all" % FLAGS.vocab_size)
 
@@ -140,7 +141,7 @@ def train():
   train_query, train_answer, dev_query, dev_answer = data_utils.prepare_chitchat_data(
       FLAGS.data_dir, vocab, FLAGS.vocab_size)
 
-  print("Preparing Fixed data in %s" % FLAGS.fixed_set_path)
+  '''print("Preparing Fixed data in %s" % FLAGS.fixed_set_path)
   fixed_path = os.path.join(FLAGS.fixed_set_path, "chitchat.fixed")
   fixed_query , fixed_answer = data_utils.prepare_defined_data(fixed_path, vocab, FLAGS.vocab_size)
 
@@ -150,7 +151,7 @@ def train():
 
   print("Preparing QA data in %s" % FLAGS.qa_set_path)
   qa_path = os.path.join(FLAGS.qa_set_path, "chitchat.qa")
-  qa_query, qa_answer = data_utils.prepare_defined_data(qa_path, vocab, FLAGS.vocab_size)
+  qa_query, qa_answer = data_utils.prepare_defined_data(qa_path, vocab, FLAGS.vocab_size)'''
 
   dummy_path = os.path.join(FLAGS.data_dir, "chitchat.dummy")
   dummy_set = data_utils.get_dummy_set(dummy_path, vocab, FLAGS.vocab_size)
@@ -167,9 +168,9 @@ def train():
                % FLAGS.max_train_data_size)
         dev_set = read_data(dev_query, dev_answer)
         train_set = read_data(train_query, train_answer, FLAGS.max_train_data_size)
-        fixed_set = read_data(fixed_query, fixed_answer, FLAGS.max_train_data_size)
+        '''fixed_set = read_data(fixed_query, fixed_answer, FLAGS.max_train_data_size)
         weibo_set = read_data(weibo_query, weibo_answer, FLAGS.max_train_data_size)
-        qa_set = read_data(qa_query, qa_answer, FLAGS.max_train_data_size)
+        qa_set = read_data(qa_query, qa_answer, FLAGS.max_train_data_size)'''
 
 
         train_bucket_sizes = [len(train_set[b]) for b in xrange(len(_buckets))]
@@ -218,7 +219,7 @@ def train():
           # Get a batch and make a step.
           start_time = time.time()
           encoder_inputs, decoder_inputs, target_weights, batch_source_encoder, batch_source_decoder = model.get_batch(
-              train_set, bucket_id, 0, fixed_set, weibo_set, qa_set)
+              train_set, bucket_id, 1)#, fixed_set, weibo_set, qa_set)
 
           if FLAGS.reinforce_learning:
             _, step_loss, _ = model.step_rl(sess, _buckets, encoder_inputs, decoder_inputs, target_weights,
@@ -301,7 +302,7 @@ def self_test():
     for _ in xrange(5):  # Train the fake model for 5 steps.
       bucket_id = random.choice([0, 1])
       encoder_inputs, decoder_inputs, target_weights, _, _ = model.get_batch(
-          data_set, bucket_id)
+          data_set, bucket_id, 1)
       model.step(sess, encoder_inputs, decoder_inputs, target_weights,
                  bucket_id, False)
 
