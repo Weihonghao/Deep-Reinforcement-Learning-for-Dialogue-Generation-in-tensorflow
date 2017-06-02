@@ -58,18 +58,18 @@ tf.app.flags.DEFINE_integer("batch_size", 4, "Batch size to use during training.
 tf.app.flags.DEFINE_integer("size", 12, "Size of each model layer.")
 tf.app.flags.DEFINE_integer("num_layers", 2, "Number of layers in the model.")
 tf.app.flags.DEFINE_integer("vocab_size",10000, "Query vocabulary size.")
-tf.app.flags.DEFINE_string("data_dir", "../train_data/", "Data directory")
-tf.app.flags.DEFINE_string("train_dir", "../train_data/", "Training directory.")
+tf.app.flags.DEFINE_string("data_dir", "../Commuter/data/", "Data directory")
+tf.app.flags.DEFINE_string("train_dir", "../Commuter/data/", "Training directory.")
 tf.app.flags.DEFINE_integer("max_train_data_size", 0, "Limit on the size of training data (0: no limit).")
 tf.app.flags.DEFINE_integer("steps_per_checkpoint", 200, "How many training steps to do per checkpoint.")
 tf.app.flags.DEFINE_boolean("decode", False, "Set to True for interactive decoding.")
 tf.app.flags.DEFINE_boolean("self_test", False, "Run a self-test if this is set to True.")
-tf.app.flags.DEFINE_string("en_cover_dict_path", "../train_data/query_cover_dict", "en_cover_dict_path")
-tf.app.flags.DEFINE_string("ff_cover_dict_path", "../train_data/answer_cover_dict", "ff_cover_dict_path")
+tf.app.flags.DEFINE_string("en_cover_dict_path", "../Commuter/data/query_cover_dict", "en_cover_dict_path")
+tf.app.flags.DEFINE_string("ff_cover_dict_path", "../Commuter/data/answer_cover_dict", "ff_cover_dict_path")
 tf.app.flags.DEFINE_float("fixed_rate", 0.1, "The scala of fixed set in batch train set")
-tf.app.flags.DEFINE_string("fixed_set_path", "../train_data/", "")
+tf.app.flags.DEFINE_string("fixed_set_path", "../Commuter/data/", "")
 tf.app.flags.DEFINE_float("weibo_rate", 0.3, "The scala of weibo set in batch train set")
-tf.app.flags.DEFINE_string("weibo_set_path", "../train_data/", "")
+tf.app.flags.DEFINE_string("weibo_set_path", "../Commuter/data/", "")
 tf.app.flags.DEFINE_float("qa_rate", 0.0, "The scala of qa set in batch train set")
 tf.app.flags.DEFINE_string("qa_set_path", "../train_data", "")
 tf.app.flags.DEFINE_boolean("reinforce_learning", True, "Turn on/off reinforce_learning")
@@ -121,14 +121,14 @@ def train():
   """Train a en->fr translation model using WMT data."""
   #with tf.device("/gpu:0"):
   # Prepare WMT data.
-  train_path = os.path.join(FLAGS.data_dir, "chitchat.train")
+  train_path = os.path.join(FLAGS.data_dir, "train")
   '''fixed_path = os.path.join(FLAGS.data_dir, "chitchat.fixed")
   weibo_path = os.path.join(FLAGS.data_dir, "chitchat.weibo")
   qa_path = os.path.join(FLAGS.data_dir, "chitchat.qa")'''
 
   #voc_file_path = [train_path+".answer", fixed_path+".answer", weibo_path+".answer", qa_path+".answer",
                      #train_path+".query", fixed_path+".query", weibo_path+".query", qa_path+".query"]
-  voc_file_path = [train_path+".answer", train_path+".query"]
+  voc_file_path = [train_path+".to", train_path+".from"]
 
   vocab_path = os.path.join(FLAGS.data_dir, "vocab%d.all" % FLAGS.vocab_size)
 
