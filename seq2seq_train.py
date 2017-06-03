@@ -128,7 +128,7 @@ def train():
 
   #voc_file_path = [train_path+".answer", fixed_path+".answer", weibo_path+".answer", qa_path+".answer",
                      #train_path+".query", fixed_path+".query", weibo_path+".query", qa_path+".query"]
-  voc_file_path = [train_path+".to", train_path+".from"]
+  voc_file_path = [train_path+".answer", train_path+".query"]
 
   vocab_path = os.path.join(FLAGS.data_dir, "vocab%d.all" % FLAGS.vocab_size)
 
