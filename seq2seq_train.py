@@ -158,7 +158,8 @@ def train():
   print("Get Dummy Set : ", dummy_set)
 
   #with tf.Session() as sess:
-#with tf.device("/gpu:1"):
+  #with tf.device("/gpu:1"):
+  with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=True)) as sess:
         # Create model.
         print("Creating %d layers of %d units." % (FLAGS.num_layers, FLAGS.size))
         model = create_model(sess, dummy_set, False)
