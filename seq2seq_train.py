@@ -157,7 +157,7 @@ def train():
   dummy_set = data_utils.get_dummy_set(dummy_path, vocab, FLAGS.vocab_size)
   print("Get Dummy Set : ", dummy_set)
 
-  with tf.Session() as sess:
+  #with tf.Session() as sess:
 #with tf.device("/gpu:1"):
         # Create model.
         print("Creating %d layers of %d units." % (FLAGS.num_layers, FLAGS.size))
