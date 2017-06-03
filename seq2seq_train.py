@@ -290,7 +290,8 @@ def train():
 
 def self_test():
   """Test the translation model."""
-  with tf.Session() as sess:
+  #with tf.Session() as sess:
+  with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=True)) as sess:
     print("Self-test for neural translation model.")
     # Create model with vocabularies of 10, 2 small buckets, 2 layers of 32.
     model = seq2seq_model.Seq2SeqModel(10, 10, [(3, 3), (6, 6)], 32, 2,
